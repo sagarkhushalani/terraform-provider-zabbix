@@ -203,7 +203,7 @@ var hostSchemaBase = map[string]*schema.Schema{
 	},
 	"monitored_by": &schema.Schema{
 		Type:		schema.TypeString,
-		Description: "1 if monitored by proxy, else 0"
+		Description: "1 if monitored by proxy, else 0",
 	},
 	"enabled": &schema.Schema{
 		Type:        schema.TypeBool,
