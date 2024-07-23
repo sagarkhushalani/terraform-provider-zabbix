@@ -201,6 +201,10 @@ var hostSchemaBase = map[string]*schema.Schema{
 		Type:        schema.TypeString,
 		Description: "ID of proxy to monitor this host",
 	},
+	"monitored_by": &schema.Schema{
+		Type:		schema.TypeString,
+		Description: "1 if monitored by proxy, else 0"
+	},
 	"enabled": &schema.Schema{
 		Type:        schema.TypeBool,
 		Optional:    true,
@@ -545,6 +549,7 @@ func buildHostObject(d *schema.ResourceData, m interface{}) (*zabbix.Host, error
 		Host:          d.Get("host").(string),
 		Name:          d.Get("name").(string),
 		ProxyID:       d.Get("proxyid").(string),
+		MonitoredBy:   d.Get("monitored_by").(string),
 		InventoryMode: HINV_LOOKUP[d.Get("inventory_mode").(string)],
 		Status:        0,
 	}
@@ -675,6 +680,7 @@ func hostRead(d *schema.ResourceData, m interface{}, params zabbix.Params) error
 	d.Set("name", host.Name)
 	d.Set("host", host.Host)
 	d.Set("proxyid", host.ProxyID)
+	d.Set("monitored_by", host.MonitoredBy)
 	d.Set("enabled", host.Status == 0)
 	d.Set("inventory_mode", HINV_LOOKUP_REV[host.InventoryMode])
 
