@@ -406,7 +406,7 @@ func hostResourceSchema(m map[string]*schema.Schema) (o map[string]*schema.Schem
 		switch k {
 		case "host", "interface", "groups":
 			schema.Required = true
-		case "templates", "proxyid", "inventory":
+		case "templates", "proxyid", "inventory", "monitored_by":
 			schema.Optional = true
 		}
 
@@ -415,6 +415,7 @@ func hostResourceSchema(m map[string]*schema.Schema) (o map[string]*schema.Schem
 
 	o["proxyid"].ValidateFunc = validation.StringIsNotWhiteSpace
 	o["proxyid"].Default = "0"
+	o["monitored_by"].Default = "1"
 	return o
 }
 
@@ -429,7 +430,7 @@ func hostDataSchema(m map[string]*schema.Schema) (o map[string]*schema.Schema) {
 		case "host", "templates":
 			schema.Optional = true
 			fallthrough
-		case "interface", "groups", "macro", "proxyid", "inventory":
+		case "interface", "groups", "macro", "proxyid", "monitored_by", "inventory":
 			schema.Computed = true
 		}
 
